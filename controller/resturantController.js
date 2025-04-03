@@ -29,7 +29,7 @@ exports.getRestaurantById = async (req, res) => {
 
 // Add a new restaurant
 exports.addRestaurant = async (req, res) => {
-  const { name, location, registerid, contact, description, email, cuisine, foodCourt, password } = req.body;
+  const { name, location, registerid, contact,image, description, email, cuisine, foodCourt, password } = req.body;
   
  const hashedPassword = await bcrypt.hash(password, 10);
   try {
@@ -51,6 +51,7 @@ exports.addRestaurant = async (req, res) => {
       email,
       location,
       registerid,
+      image,
       contact,
       description,
       cuisine,
