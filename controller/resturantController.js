@@ -34,13 +34,15 @@ exports.addRestaurant = async (req, res) => {
  const hashedPassword = await bcrypt.hash(password, 10);
   try {
     // Check if the food court exists
-    const resturantExists = await Restaurant.find({email});
+    const resturantExists = await Restaurant.findOne({email});
     if (resturantExists) {
       return res.status(400).json({ message: 'Resturant already exist' });
     }
 
     const foodCourtExists = await FoodCourt.findById(foodCourt);
     if (!foodCourtExists) {
+     
+
       return res.status(400).json({ message: 'Food Court does not exist' });
     }
 
@@ -61,6 +63,7 @@ exports.addRestaurant = async (req, res) => {
     user.password=null
     res.status(201).json({token,user});
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Error adding restaurant', error: error.message });
   }
 };
