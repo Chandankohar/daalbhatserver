@@ -3,15 +3,16 @@ const router = express.Router();
 const restaurantController = require('../controller/resturantController');
 
 // Get all restaurants
-router.get('/restaurants', restaurantController.getAllRestaurants);
+router.get('/', restaurantController.getAllRestaurants);
+router.get('/foodcourt/:foodCourtId', restaurantController.getRestaurantsByFoodCourt);
 
 // Get a specific restaurant by ID
-router.get('/restaurants/:id', restaurantController.getRestaurantById);
+router.get('/:id', restaurantController.getRestaurantById);
 
 // Add a new restaurant
-router.post('/restaurants', restaurantController.addRestaurant);
-
+router.post('/', restaurantController.addRestaurant);
+router.post('/login', restaurantController.resturantLogin);
 // Update an existing restaurant
-router.put('/restaurants/:id', restaurantController.updateRestaurant);
+router.put('/:id', restaurantController.updateRestaurant);
 
 module.exports = router;

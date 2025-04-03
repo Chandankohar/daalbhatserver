@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Resturant = require("../model/resturant"); // Assuming you have a User model in the 'models' folder
+const Restaurant = require("../model/restaurant");
 
 const verifyrestuToken = async (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1];
@@ -17,7 +17,7 @@ const verifyrestuToken = async (req, res, next) => {
     req.resturant = verified;
 
     // Verify user exists in the database
-    const resturant = await Resturant.findById(verified._id); // assuming `_id` is stored in the token
+    const resturant = await Restaurant.findById(verified._id); // assuming `_id` is stored in the token
 
     if (resturant && resturant?.role==='resturant') {
         next();

@@ -3,7 +3,7 @@ const User = require("../model/user"); // Assuming you have a User model in the 
 
 const verifyToken = async (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1];
-  
+  console.log('token',token)
   // If no token is provided
   if (!token) {
     return res.status(401).json({ message: "Access Denied" });
@@ -13,16 +13,15 @@ const verifyToken = async (req, res, next) => {
     // Verify the token
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     
-    // Attach user info to the request
-    req.user = verified;
-
+    console.log('verified',verified)
     // Verify user exists in the database
-    const user = await User.findById(verified._id); // assuming `_id` is stored in the token
-
+    const user = await User.findById(verified.id).select('-password'); // assuming `_id` is stored in the token
+    console.log('user',user)
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
+    req.user = user;
+    console.log('user',user)
     // If user is found, proceed to next middleware
     next();
   } catch (err) {
